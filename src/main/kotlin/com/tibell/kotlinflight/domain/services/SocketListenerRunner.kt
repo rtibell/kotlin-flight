@@ -28,7 +28,7 @@ class SocketListenerRunner : ApplicationRunner {
             val flightDate = parseBSTPackage(text)
             if (flightDate != null) {
                 val fd = flightCacheService.store(flightDate)
-                log.debug("data from cache {}", fd)
+                //log.debug("data from cache {}", fd)
             }
             //log.debug("read text {}", text)
         }

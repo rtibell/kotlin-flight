@@ -5,11 +5,12 @@ import org.springframework.cache.annotation.CacheConfig
 import org.springframework.cache.annotation.Cacheable
 import org.springframework.stereotype.Component
 import org.springframework.stereotype.Service
+import kotlin.collections.Map as Map
 import kotlin.collections.MutableMap as KotlinCollectionsMutableMap
 
 @Service
 open class FlightCacheService {
-     var flightCache = HashMap<String, TransmissionMessage>()
+     val flightCache = mutableMapOf<String, TransmissionMessage>()
 
     fun store(flightData: TransmissionMessage): TransmissionMessage {
         val updFD = flightData.merge(flightCache[flightData.hex])
@@ -19,5 +20,11 @@ open class FlightCacheService {
 
     fun read(hex: String): TransmissionMessage? {
         return flightCache[hex]
+    }
+
+    fun renderCacheInfo(): String? {
+        val sb = StringBuffer()
+        flightCache.forEach {(k,v) -> sb.append(v)}
+        return sb.toString()
     }
 }
