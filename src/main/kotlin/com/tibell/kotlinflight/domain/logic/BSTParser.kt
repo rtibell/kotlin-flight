@@ -2,8 +2,11 @@ package com.tibell.kotlinflight.domain.logic
 
 import com.tibell.kotlinflight.domain.entity.TransmissionMessage
 import com.tibell.kotlinflight.exceptions.IllegalBSTMessageType
+import org.slf4j.LoggerFactory
 
 open public class BSTParser {
+    private val log = LoggerFactory.getLogger(this.javaClass)
+
 }
 
 
@@ -27,8 +30,10 @@ fun parseBSTPackage(pkgData: String): TransmissionMessage? {
 }
 
 private fun parseMSG(arrayBSTs: List<String>): TransmissionMessage {
-    return  TransmissionMessage(arrayBSTs[2].toInt(), arrayBSTs[3].toInt(),
-                                arrayBSTs[4], arrayBSTs[5].toInt(),
+    return  TransmissionMessage(if (arrayBSTs[2] == "") 0 else arrayBSTs[2].toInt(),
+                                if (arrayBSTs[3] == "") 0 else arrayBSTs[3].toInt(),
+                                arrayBSTs[4],
+                                if (arrayBSTs[5] == "") 0 else arrayBSTs[5].toInt(),
                                 arrayBSTs[6], arrayBSTs[7],
                                 arrayBSTs[8], arrayBSTs[9],
                                 cs = arrayBSTs[10],
